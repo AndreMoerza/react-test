@@ -9,16 +9,21 @@ class TableRow extends Component {
   constructor(props) {
         super(props);
         this.delete = this.delete.bind(this);
+  }
+  delete(id) {
+    if (window.confirm('Are you sure you wish to delete this item ?')) {
+      axios.delete(`https://simple-contact-crud.herokuapp.com/contact/${this.props.contact.id}`)
+      .then(response => {
+          console.log(response);
+          this.props.deleteRow(id);
+      })
+      .catch(error => {
+          console.log(error);
+      });
+
+      //this.props.deleteRow(id);
     }
-    delete() {
-      if (window.confirm('Are you sure you wish to delete this item?')) {
-        axios.delete(`https://simple-contact-crud.herokuapp.com/contact/${this.props.contact.id}`)
-            .then(res => console.log('DELETED'))
-            .catch(err => { 
-              alert(err);
-            })
-      } 
-    }
+  }
   render() {
     return (
         <tr>
@@ -35,7 +40,7 @@ class TableRow extends Component {
             <Link to={"/edit/"+this.props.contact.id} className="btn btn-primary"><FontAwesomeIcon icon={faEdit} /></Link>
           </td>
           <td>
-            <button onClick={this.delete} className="btn btn-danger"><FontAwesomeIcon icon={faTrash} /></button>
+            <button type="submit" onClick={() => this.delete(this.props.contact.id)} className="btn btn-danger"><FontAwesomeIcon icon={faTrash} /></button>
           </td>
         </tr>
     );

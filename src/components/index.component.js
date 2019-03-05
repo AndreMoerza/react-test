@@ -7,23 +7,10 @@ import { faPlus } from '@fortawesome/fontawesome-free-solid';
 
 export default class Index extends Component {
 
-  constructor(props) {
+    constructor(props) {
       super(props);
       this.state = {contacts: []};
     }
-    getMatchParams = props => {
-      const { location, path, exact, strict } = props || this.props;
-      const match = matchPath(location.pathname, {
-        path,
-        exact,
-        strict
-      });
-      if (match) {
-        console.log(match.params);
-        return match.params;
-      }
-      return {};
-    };
     loadData() {
       axios.get('https://simple-contact-crud.herokuapp.com/contact')
         .then(response => {
@@ -36,18 +23,14 @@ export default class Index extends Component {
     componentDidMount(){
       this.loadData();
     }
-    componentDidUpdate(prevProps, prevState) {
-      //const { updateParams, match } = this.props;
-      const currentParams = this.getMatchParams();
-      const prevParams = this.getMatchParams(prevProps);
-      if (currentParams !== prevParams) {
-        this.loadData();
-      }
-      
-    }
+    deleteRow(id) {
+      const newRows = this.state.contacts.filter((row)=>row.id!==id);
+      //console.log(newRows);
+      this.setState({contacts: newRows});
+    } 
     tabRow(){
       return this.state.contacts.map((contact, i) => {
-          return <TableRow contact={contact} key={i}/>;
+          return <TableRow contact={contact} key={i} deleteRow={(id) => this.deleteRow(id)}/>;
       });
     }
 
