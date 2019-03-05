@@ -46,7 +46,7 @@ export default class Create extends Component {
       firstName: this.state.firstname,
       lastName: this.state.lastname,
       age: this.state.age,
-      photo: this.state.photo || "N/A"
+      photo: this.state.photo
     };
     axios.post('https://simple-contact-crud.herokuapp.com/contact', obj)
         .then(res => this.props.history.push('/', res.data));

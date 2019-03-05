@@ -11,7 +11,7 @@ export default class Index extends Component {
       super(props);
       this.state = {contacts: []};
     }
-    loadData() {
+    componentDidMount(){
       axios.get('https://simple-contact-crud.herokuapp.com/contact')
         .then(response => {
           this.setState({ contacts: response.data.data });
@@ -19,9 +19,6 @@ export default class Index extends Component {
         .catch((error) => {
           console.log(error);
         })
-    }
-    componentDidMount(){
-      this.loadData();
     }
     deleteRow(id) {
       const newRows = this.state.contacts.filter((row)=>row.id!==id);

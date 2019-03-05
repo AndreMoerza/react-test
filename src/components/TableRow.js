@@ -6,13 +6,9 @@ import { faEdit, faTrash } from '@fortawesome/fontawesome-free-solid';
 
 class TableRow extends Component {
 
-  constructor(props) {
-        super(props);
-        this.delete = this.delete.bind(this);
-  }
   delete(id) {
     if (window.confirm('Are you sure you wish to delete this item ?')) {
-      axios.delete(`https://simple-contact-crud.herokuapp.com/contact/${this.props.contact.id}`)
+      axios.delete(`https://simple-contact-crud.herokuapp.com/contact/${id}`)
       .then(response => {
           console.log(response);
           this.props.deleteRow(id);
